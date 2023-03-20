@@ -8,6 +8,21 @@ resource "aws_instance" "web_server" {
         Name = "Simple Web server Instance by Terraform"
         Owner = "Stanislav Monin"
     }
+    
+    # Use "terraform console" command for t-shooting templates
+    # FOR INSTANCE:
+    # > templatefile("install_httpd.tpl", {web_server = "httpd", check_url ="icanhazip.com"}
+    # OUTPUT:
+    /* <<EOT
+        #!/bin/bash
+        yum -y update
+        yum -y install httpd
+        ip=`curl icanhazip.com`
+        echo "<h1>Web Server with IP: $ip is ready!</h1>" > /var/www/html/index.html
+        sudo service httpd start
+        chkconfig httpd on
+    EOT */
+
     user_data = templatefile("install_httpd.tpl", {
         web_server = "httpd",
         check_url = "icanhazip.com",
