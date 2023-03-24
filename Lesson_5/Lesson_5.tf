@@ -52,3 +52,16 @@ resource "aws_security_group" "web_server_sg" {
     }
 }
 
+output "webserver_instance_id" {
+  value       = aws_instance.web_server.id
+  sensitive   = false
+  description = "description"
+  depends_on  = []
+}
+
+output "webserver_public_ip" {
+    value       = aws_instance.web_server.public_ip
+    sensitive   = false
+    description = "description"
+    depends_on  = []
+}
