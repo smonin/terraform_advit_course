@@ -1,5 +1,9 @@
 provider "aws" {}
 
+ resource "aws_eip" "web_server_static_ip" {
+    instance = aws_instance.web_server.id
+ }
+
 resource "aws_instance" "web_server" {
     ami = "ami-06616b7884ac98cdd"
     instance_type = "t2.micro"
@@ -29,18 +33,21 @@ resource "aws_instance" "web_server" {
     })
 
     #Lesson_6
+
     #1st lifecycle
     #lifecycle {
     #    prevent_destroy = true
     #}
+
     #2nd lifecycle
     #lifecycle {
     #    ignore_changes = ["user_data"]
     #}
+
     #3rd lifecycle
-    #lifecycle {
-    #    create_before_destroy = true
-    #}
+    lifecycle {
+        create_before_destroy = true
+    }
 
 }
 
