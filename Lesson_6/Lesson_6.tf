@@ -73,6 +73,13 @@ resource "aws_security_group" "web_server_sg" {
     }
 }
 
+output "webserver_name" {
+  value       = aws_instance.web_server.tags
+  sensitive   = false
+  description = "description"
+  depends_on  = []
+}
+
 output "webserver_instance_id" {
   value       = aws_instance.web_server.id
   sensitive   = false
@@ -81,8 +88,15 @@ output "webserver_instance_id" {
 }
 
 output "webserver_public_ip" {
-    value       = aws_instance.web_server.public_ip
+    value       = aws_eip.web_server_static_ip.public_ip
     sensitive   = false
-    description = "description"
+    description = "Information about Public IP"
+    depends_on  = []
+}
+
+output "webserver_private_ip" {
+    value       = aws_eip.web_server_static_ip.private_ip
+    sensitive   = false
+    description = "Information about Private IP"
     depends_on  = []
 }
